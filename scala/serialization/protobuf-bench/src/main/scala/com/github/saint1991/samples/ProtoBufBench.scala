@@ -7,11 +7,13 @@ import java.util.concurrent.ThreadLocalRandom
 import com.github.saint1991.samples.nobid.Nobid
 import com.github.saint1991.samples.spot.{Spot, SpotType}
 
+import scala.util.control.Exception._
+
 
 object ProtoBufBench extends App {
 
-  final val N = 1000000
-  final val outFile = new File("nobids.protobuf")
+  final val N = 100000
+  final val outFile = new File("serialization/out/nobids.protobuf")
 
   val dataset = BenchmarkUtil.createDataset(N)
 
@@ -24,7 +26,7 @@ object ProtoBufBench extends App {
 
   // write to file
   val out = new FileOutputStream(outFile)
-  writeToFile(dataset, out)
+  allCatch andFinally out.close() apply writeToFile(dataset, out)
 
 
   // decoding
@@ -32,7 +34,6 @@ object ProtoBufBench extends App {
   decode(encodedDatasets)
   val afterDecode = System.currentTimeMillis()
   println(s"decoding time: ${afterDecode - beforeDecode} msec")
-
 
 
   private def encode(dataset: Seq[Nobid]): Seq[Array[Byte]] = {
@@ -59,7 +60,7 @@ object BenchmarkUtil {
       loggedAt = "2017-06-30 09:07:37.677",
       mId = 234,
       nbr = 6260,
-      page = "http://diamond.jp/articles/-/15434",
+      page = "http://diamond.jp/articles/a/15434",
       resTime = 4,
       spot = Some(Spot(
         id = 2406,
