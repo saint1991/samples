@@ -1,10 +1,32 @@
+
+# Apache Avro
+
+## languages
+officially supported
+- C
+- C++
+- C#
+- Java
+- Perl
+- Python
+- Ruby
+- PHP
+
+## schema
+- No field index is included in data
+    - decoding is always based on writer's (and reader's for schema evolution) schema.
+- Dynamic schema resolution
+    - no need to generate codes in advance
+    -  encode/decode is conduct according only to schema
+
+   
+``` nobid.avsc
 {
     "namespace": "com.github.saint1991.samples",
     "name":"Nobid",
     "type":"record",
     "fields":[
-        {"name":"adnwId","type":"int"},
-        {"name":"appName","type":"string"},
+        {"name":"adnwId","type": "int"},
         {"name":"auctionId","type":"string"},
         {"name":"host","type":"string"},
         {"name":"loggedAt","type":"string"},
@@ -39,3 +61,5 @@
         }}
     ]
 }
+
+```
