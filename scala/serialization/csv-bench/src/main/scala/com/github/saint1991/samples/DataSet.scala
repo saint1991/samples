@@ -65,7 +65,7 @@ object DataSet {
       adnwId = ThreadLocalRandom.current().nextInt(0, 8),
       appName = "sampleApp",
       auctionId = UUID.randomUUID().toString,
-      host = "lodeo-prd-dsp03",
+      host = "prd-dsp03",
       loggedAt = "2017-06-30 09:07:37.677",
       mId = 234,
       nbr = 6260,
@@ -80,7 +80,7 @@ object DataSet {
       ),
       tags = Map(
         "media" -> "facebook",
-        "ssp" -> "profitx"
+        "ssp" -> "google"
       )
     )
   } yield data
