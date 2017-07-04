@@ -16,7 +16,7 @@
 ### Data size of 10,000 encoded records in MB.
 |Protocol Buffers (proto3) | Thrift (compact protocol) | Avro | CSV | JSON (with circe) |
 |:--:|:--:|:--:|:--:|:--:|
-|1.87||1.83|1.69|1.75|3.23|
+|1.87|1.83|1.69|1.75|3.23|
 
 
 ## Run benchmarks
