@@ -14,7 +14,7 @@ message Nobid {
 
   // fields should be snake_case
   // each field should have an unique index
-  // required directive indicate a field must exis
+  // required directive indicate a field must exist
   int32  adnw_id = 1;
   string app_name = 2;
   string auction_id = 3;

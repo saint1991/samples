@@ -25,3 +25,11 @@ sbt $project/jmh:run
 ```
 where $project is one of the name of sbt sub project (e.g. avroBench)
 
+
+## Sample data file generation
+```
+sbt $project/run
+```
+
+## Schemas
+The data schemas used for this benchmark are located on [samples/serialization](../../serialization)
