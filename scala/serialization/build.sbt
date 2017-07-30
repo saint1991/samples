@@ -86,3 +86,5 @@ lazy val avroBench = (project in file("avro-bench"))
     mainClass := Some("com.github.saint1991.samples.AvroBench"),
     libraryDependencies += "org.apache.avro" % "avro" % "1.8.2"
   )
+
+lazy val tmp = project in file("tmp")

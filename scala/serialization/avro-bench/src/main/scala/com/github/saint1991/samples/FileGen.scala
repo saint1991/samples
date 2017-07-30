@@ -13,7 +13,7 @@ object FileGen extends App {
   final val Schema = Nobid.SCHEMA$
   val writer = new SpecificDatumWriter[Nobid](Schema)
 
-  final val N = 10000
+  final val N = 10
   val dataset = DataSet.createDataset(N)
 
   final val outFile = new File("out/nobids.avro")
