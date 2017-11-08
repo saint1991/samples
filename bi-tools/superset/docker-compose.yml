@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+
+  mysql:
+    image: "mysql:5.7.19"
+    healthcheck:
+      test: ["CMD", "mysql", "-u", "aipredictor", "-p", "-e", "quit"]
+      interval: "15s"
+      timeout: "5s"
+      retries: 5
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "superset"
+      MYSQL_USER: "superset"
+      MYSQL_PASSWORD: "superset"
+      MYSQL_DATABASE: "superset"
+
+  superset:
+    build: ./superset
+    depends_on:
+      - "mysql"
+    healthcheck:
+      test: ["curl", "-f", "http://localhost:8088/health"]
+      interval: "20s"
+      timeout: "5s"
+      retries: 10
+    restart: "on-failure"
+    environment:
+      SUPERSET_SECRET_KEY: "superset"
+      SUPERSET_SQLALCHEMY_DATABASE_URI: "mysql://superset:superset@mysql/superset"
+    ports:
+      - "8088:8088"
+    entrypoint:
+      - "dockerize"
+      - "-template"
+      - "/tmp/superset_config.py.tmpl:/home/superset/superset_config.py"
+      - "-wait"
+      - "tcp://mysql:3306"
+      - "superset"
+    command:
+      - "runserver"
