@@ -1,11 +1,15 @@
 version: '3'
 
+volumes:
+  cloudsql:
+
+
 services:
 
   mysql:
-    image: "mysql:5.7.19"
+    image: "mysql:5.7.20"
     healthcheck:
-      test: ["CMD", "mysql", "-u", "aipredictor", "-p", "-e", "quit"]
+      test: ["CMD", "mysql", "-u", "superset", "-p", "-e", "quit"]
       interval: "15s"
       timeout: "5s"
       retries: 5
@@ -41,3 +45,16 @@ services:
       - "superset"
     command:
       - "runserver"
+
+  cloudsql-proxy:
+    image: "gcr.io/cloudsql-docker/gce-proxy:1.11"
+    ports:
+      - "3306"
+    command:
+      - "/cloud_sql_proxy"
+      - "-dir=/cloudsql"
+      - "-credential_file=/etc/credential.json"
+      - "-instances=${INSTANCES}=tcp:0.0.0.0:3306"
+    volumes:
+      - "${CREDENTIAL_FILE}:/etc/credential.json"
+      - "cloudsql:/cloudsql"
