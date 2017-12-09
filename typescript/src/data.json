@@ -1,0 +1,15 @@
+{
+  "NBA": {
+    "teams": [
+      "Golden State Warriors",
+      "Cleveland Cavaliers"
+    ]
+  },
+  "B League": {
+    "teams": [
+      "Alvark Tokyo",
+      "Sun Rockers Shibuya",
+      "Chiba Jets"
+    ]
+  }
+}
