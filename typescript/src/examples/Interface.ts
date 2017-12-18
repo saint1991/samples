@@ -4,7 +4,26 @@ interface Introduction {
     readonly lastName: string;
     readonly age: number;
     readonly zipCode?: string;
+    readonly [others: string]: any;
+    greet(): void;               // method
 }
+
+interface ExtraIntroduction extends Introduction {
+    readonly nationality: string;
+}
+
+// Interface for a function
+interface Greeting {
+    (name: string): void; // function that takes a string parameter and returns nothing
+}
+
+interface Indexable {
+    readonly [key: string]: number; // string -> number map interface. string or number can be taken as index
+}
+
+const GreetingFunc: Greeting = (name: string) => {
+    console.log("Hello ${name}");
+};
 
 const printIntroduction = (intro: Introduction): void => {
     console.log(`
@@ -25,6 +44,10 @@ export default () => {
         firstName: "saint",
         lastName: "seiya",
         age: 26,
+        gender: "male",
+        greet(){
+            console.log("Hello!!")
+        }
     };
     printIntroduction(intro);
 };
