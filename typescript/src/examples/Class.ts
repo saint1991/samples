@@ -41,6 +41,23 @@ class Cat {
     }
 }
 
+class PersonLike<T extends Person> {
+    show(p: T): void {
+        const introduction = `
+            ${p.firstName} ${p.lastName}
+            ${p.age} years old.
+        `;
+        console.log(introduction);
+    }
+}
+
+function getProp<T, K extends keyof T>(obj: T, key: K) {
+    return obj[key];
+}
+
+function create<T>(c: {new(): T; }): T {
+    return new c();
+}
 
 
 export default (): void => {
