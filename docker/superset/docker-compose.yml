@@ -1,0 +1,46 @@
+version: '3'
+
+volumes:
+  cloudsql:
+
+
+services:
+
+  mysql:
+    image: "mysql:5.7.21"
+    healthcheck:
+      test: ["CMD", "mysql", "-u", "superset", "--password=superset", "-e", "quit"]
+      interval: "15s"
+      timeout: "5s"
+      retries: 5
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "superset"
+      MYSQL_USER: "superset"
+      MYSQL_PASSWORD: "superset"
+      MYSQL_DATABASE: "superset"
+
+  superset:
+    build: ./superset
+    depends_on:
+      - "mysql"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8088/health"]
+      interval: "20s"
+      timeout: "5s"
+      retries: 10
+    restart: "on-failure"
+    environment:
+      SUPERSET_METASTORE_USER: "superset"
+      SUPERSET_METASTORE_PASSWORD: "superset"
+      SUPERSET_METASTORE_HOST: "mysql"
+      SUPERSET_METASTORE_PORT: "3306"
+      SUPERSET_METASTORE_DATABASE: "superset"
+      SUPERSET_SECRET_KEY: "superset"
+    ports:
+      - "8088:8088"
+    entrypoint:
+      - "superset"
+    command:
+      - "runserver"
