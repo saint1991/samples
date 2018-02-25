@@ -19,8 +19,8 @@ func init() {
 }
 
 // Public function should start with an upper case
-func Circumference(r float64) Circumference {
-	return float64(2) * pi * r
+func CircumferenceFn(r float64) Circumference {
+	return Circumference(float64(2) * pi * r)
 }
 
 func intExample() int {
@@ -55,7 +55,7 @@ func UsePointerExample() {
 }
 
 func main() {
-	circumference := Circumference(2)
+	circumference := CircumferenceFn(2)
 	fmt.Printf("Circumference: %f\n", circumference)
 
 	UseIntExamples()
