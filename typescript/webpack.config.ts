@@ -2,7 +2,7 @@ import * as webpack from "webpack";
 import * as CleanWebpackPlugin from "clean-webpack-plugin";
 import * as path from "path";
 
-const config: webpack.Configuration = {
+const config = {
     context: path.resolve(__dirname, "src"),
     entry: "./index.ts",
     output: {
@@ -15,13 +15,16 @@ const config: webpack.Configuration = {
             { test: /\.json$/, use: "json-loader" }
         ]
     },
+    resolve: {
+       extensions: [".ts", ".js"],
+    },
     plugins: [
         new CleanWebpackPlugin(["dist"]),
         new webpack.NoEmitOnErrorsPlugin(),
-        new webpack.optimize.UglifyJsPlugin({
-            sourceMap: true
-        })
-    ]
+    ],
+    optimization: {
+        minimize: true
+    }
 };
 
 export default config;

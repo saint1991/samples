@@ -29,9 +29,3 @@ function concat(str1: string, str2: string);
 function concat(...strs: string[]): void  {
     console.log(strs.join(","));
 }
-
-
-
-const useThis = function(this: void) {
-
-};
