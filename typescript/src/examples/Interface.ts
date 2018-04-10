@@ -32,6 +32,7 @@ const printIntroduction = (intro: Introduction): void => {
         age: ${intro.age}
         zipCode: ${intro.zipCode}
     `);
+    intro.greet();
 };
 
 const arr = (): void => {
@@ -45,8 +46,8 @@ export default () => {
         lastName: "seiya",
         age: 26,
         gender: "male",
-        greet(){
-            console.log("Hello!!")
+        greet() {
+            console.log("Hello!!");
         }
     };
     printIntroduction(intro);

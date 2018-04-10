@@ -3,7 +3,7 @@ const error = (message: string): never => {
     throw new Error(message);
 };
 
-const swap = (first: number, second: number): [number, number] =>  {
+export const swap = (first: number, second: number): [number, number] =>  {
     [first, second] = [second, first];
     return [first, second];
 };
@@ -27,7 +27,7 @@ const spread = (): void => {
     console.log(c);
 };
 
-export default (): void => {
+function basic(): void {
 
     // basic types
     const name: string = "saint1991";
@@ -70,8 +70,11 @@ export default (): void => {
     };
     const {a, b} = obj;
 
+    // multiline string
     console.log(`Hello! I am ${name}! I am ${age} years old now.
-    I'm  working as a ${EngineerType[EngineerType.Backend]} familiar with Data Engineering.
-    I am also interested in Data science e.g. Machine Learning.
-    Here are my favorite comics ${favoriteComics}. Thank you!`);
+I'm  working as a ${EngineerType[EngineerType.Backend]} familiar with Data Engineering.
+I am also interested in Data science e.g. Machine Learning.
+Here are my favorite comics ${favoriteComics}. Thank you!`);
 };
+
+export default basic;

@@ -1,10 +1,10 @@
 
 interface Serializable {
-    toString(): string
+    toString(): string;
 }
 
 interface Runnable {
-    run()
+    run();
 }
 
 class Task implements Serializable {
@@ -52,10 +52,10 @@ function assertNever(x: never): never {
 
 type Readonly<T> = {
     readonly [P in keyof T]: T[P];
-}
+};
 type Partial<T> = {
     [P in keyof T]?: T[P];
-}
+};
 
 export default () => {
     const intersect: Serializable & Runnable = new RunnableTask();

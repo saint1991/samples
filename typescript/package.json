@@ -4,7 +4,7 @@
   "description": "example use of TypeScript for Node.js project with webpack",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack.config.ts",
+    "build": "webpack --mode production --config webpack.config.ts",
     "watch": "webpack --watch --config webpack.config.ts",
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "start": "npm run build && node dist/index.js"
@@ -21,14 +21,14 @@
   "dependencies": {},
   "license": "ISC",
   "devDependencies": {
-    "@types/clean-webpack-plugin": "^0.1.0",
-    "@types/webpack": "^3.8.1",
-    "clean-webpack-plugin": "^0.1.17",
-    "awesome-typescript-loader": "^3.4.1",
+    "@types/clean-webpack-plugin": "^0.1.1",
+    "@types/webpack": "^3.8.8",
+    "awesome-typescript-loader": "^3.5.0",
+    "clean-webpack-plugin": "^0.1.18",
     "ts-node": "^3.3.0",
-    "tslint": "^5.8.0",
-    "typescript": "^2.6.2",
-    "uglifyjs-webpack-plugin": "^1.1.2",
-    "webpack": "^3.10.0"
+    "tslint": "^5.9.1",
+    "typescript": "^2.7.2",
+    "webpack": "^4.1.0",
+    "webpack-cli": "^2.0.10"
   }
 }
