@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+
+  fluent-bit-client:
+    build: ./client
+    restart: on-failure
+  
+  fluentd-server:
+    build: ./server
+    restart: on-failure
