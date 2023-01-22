@@ -1,5 +1,11 @@
 use std::fmt::Debug;
 
+#[derive(Debug)]
+struct A<'a> {
+    message: &'a str,
+    num: i32,
+}
+
 fn main() {
     let mut v1: Vec<i32> = Vec::new();
     v1.push(1);
@@ -19,6 +25,22 @@ fn main() {
     plus10_all(&mut v3);
     print_all(&v3);
 
+
+    let mut v4 = vec![
+        A {
+            message: "abc",
+            num: 3,
+        },
+        A {
+            message: "def",
+            num: 4,
+        }
+    ];
+    for i in &v4 {
+        let i2 = i;
+        println!("{:?}", i);
+        println!("{:?}", i2);
+    }
 }
 
 fn print_result(op: Option<&i32>) {
