@@ -3,6 +3,8 @@ import http, { RefinedParams, RefinedResponse, ResponseType } from 'k6/http';
 
 import { type Schema } from '../models/schema'; 
 
+
+
 export class SchemaApi {
     constructor(protected readonly baseUrl: string) { }
 
@@ -14,4 +16,6 @@ export class SchemaApi {
         });
         return response;
     }
+
+    
 }

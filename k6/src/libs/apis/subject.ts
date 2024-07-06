@@ -1,6 +1,8 @@
 import { check } from 'k6';
 import http, { RefinedParams, RefinedResponse, ResponseType } from 'k6/http';
 
+import { URL } from 'https://jslib.k6.io/url/1.0.0/index.js';
+
 export class SubjectApi {
     
     constructor(protected readonly baseUrl: string) { }
@@ -24,8 +26,9 @@ export class SubjectApi {
     }
 
     createSubject<T extends ResponseType | undefined>(subject: string, body?: string, params?: RefinedParams<T>): RefinedResponse<T> {
-        const path = `/subjects/${subject}`;
-        const response = http.post<T>(`${this.baseUrl}/${path}`, JSON.stringify(body), params);
+        const url = new URL(`${this.baseUrl}/subjects/${subject}`);
+        // const path = `/subjects/${subject}`;
+        const response = http.post<T>(url.toString(), JSON.stringify(body), params);
         check(response, {
             'status code for POST /subjects/{subject} should be 201': res => res.status === 201
         });
