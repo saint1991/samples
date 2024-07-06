@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+      "target": "es5",
+      "moduleResolution": "node",
+      "module": "commonjs",
+      "allowJs": true,
+      "removeComments": false,
+      "sourceMap": true,
+      "outDir": "./dist",
+      "rootDir": "./src",
+  
+      "strict": true,
+      "noImplicitAny": true,
+      "noImplicitThis": true,
+  
+      "noUnusedLocals": false,
+      "noUnusedParameters": false,
+      "noImplicitReturns": true,
+      "noFallthroughCasesInSwitch": true,
+  
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+  
+      "skipLibCheck": true
+    },
+    "include": ["src/**/*"],
+    "exclude": ["dist", "node_modules"]
+  }
