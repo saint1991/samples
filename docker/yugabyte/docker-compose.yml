@@ -1,0 +1,17 @@
+
+volumes:
+  yb_data:
+
+services:
+
+  yugabyte1:
+    build: .
+    ports:
+      - 7001:7000
+      - 9000:9000
+      - 15433:15433
+      - 5433:5433
+      - 9042:9042
+    volumes:
+      - yb_data:/home/yugabyte/yb_data
+    command: ["bin/yugabyted", "start", "--base_dir=/home/yugabyte/yb_data", "--background=false"]
