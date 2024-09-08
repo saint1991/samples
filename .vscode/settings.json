@@ -5,5 +5,13 @@
     "files.associations": {
         "stdio.h": "c",
         "string": "cpp"
-    }
+    },
+    "protoc": {
+        "options": [
+            "--proto_path=${workspaceFolder}/rust/tonic/proto"
+        ]
+    },
+    "rust-analyzer.linkedProjects": [
+        "${workspaceFolder}/rust/tonic/Cargo.toml"
+    ]
 }
