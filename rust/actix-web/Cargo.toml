@@ -5,4 +5,7 @@ edition = "2021"
 
 [dependencies]
 actix-web = { version = "4.9.0" }
-hostname = { version = "0.4.0" }
+actix-web-middleware-keycloak-auth = { version = "0.5.0" }
+serde = { version = "1.0.217", features = ["derive"] }
+serde_json = { version = "1.0.137" }
+thiserror = { version = "2.0.11" }
