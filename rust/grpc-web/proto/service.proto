@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package sample;
+
+message Request {
+  string name = 1;
+}
+
+enum Status {
+  STATUS_PENDING = 0;
+  STATUS_RUNNING = 1;
+  MODE_READ_ONLY = 2;
+}
+
+message Progress {
+  int32 percent = 1;
+}
+
+message Result {
+  string message = 1;
+}
+
+
+message Error {
+  enum ErrorCode {
+    ERROR_CODE_UNSPECIFIED = 0;
+    ERROR_CODE_INTERNAL = 1;
+  }
+  
+  ErrorCode code = 1;
+  string message = 2;
+}
+
+
+message Response {
+  oneof res {
+    Progress progress = 1;
+    Result result = 2;
+    Error error = 3;
+  }
+}
+
+
+service SampleService {
+  rpc ServerStream(Request) returns (stream Response) {};
+}
