@@ -1,0 +1,23 @@
+volumes:
+  pg-volume:
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: pgpassword
+      POSTGRES_DB: database
+    ports:
+      - 5432:5432
+    volumes:
+      - pg-volume:/var/lib/postgresql/data
+      - ./test:/mnt
+
+  duckdb:
+    build: .
+    volumes:
+      - ./text2datetime.py:/home/text2datetime.py
+      - ./uv.lock:/home/uv.lock
+      - ./pyproject.toml:/home/pyproject.toml
+      - ./util:/home/util
