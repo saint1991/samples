@@ -3,6 +3,11 @@ use polars::prelude::*;
 mod model;
 use fake::{Fake, Faker};
 
+const N_MASTER: usize = 600000;
+const N_TRANSACTION: usize = 30000000;
+
+const OUT_DIR: &str = "./gen";
+
 fn account_df(n: usize) -> DataFrame {
     let rows = (0..n)
         .map(|_| Faker.fake::<model::Account>())
@@ -133,7 +138,9 @@ fn purchase_df(n: usize, accounts: &DataFrame) -> DataFrame {
         purchased_by,
         Column::new(
             "item".into(),
-            rows.iter().map(|x| x.item.name.to_owned()).collect::<Vec<String>>(),
+            rows.iter()
+                .map(|x| x.item.name.to_owned())
+                .collect::<Vec<String>>(),
         ),
         Column::new(
             "amount".into(),
@@ -141,32 +148,67 @@ fn purchase_df(n: usize, accounts: &DataFrame) -> DataFrame {
         ),
         Column::new(
             "memo".into(),
-            rows.iter().map(|x| x.memo.to_owned()).collect::<Vec<String>>(),
-        )
+            rows.iter()
+                .map(|x| x.memo.to_owned())
+                .collect::<Vec<String>>(),
+        ),
     ])
     .unwrap()
 }
 
-fn main() {
-    let accounts = account_df(500000);
-    println!(
-        "accounts: estimated memory size {} MB",
-        accounts.estimated_size() / 1024 / 1024
-    );
-    println!("accounts: {}", accounts);
-
-    let purchases = purchase_df(10000000, &accounts);
-    println!(
-        "purchases: estimated memory size {} MB",
-        purchases.estimated_size() / 1024 / 1024
-    );
-    println!("purchases: {}", purchases);
-
+fn prepare_dfs() -> (DataFrame, DataFrame, DataFrame) {
+    let accounts = account_df(N_MASTER);
+    let purchases = purchase_df(N_TRANSACTION, &accounts);
     let calendar = calendar_df(
         &chrono::NaiveDate::from_ymd_opt(2024, 10, 1).unwrap(),
         &chrono::NaiveDate::from_ymd_opt(2025, 5, 12).unwrap(),
     );
+    (accounts, purchases, calendar)
+}
 
-    println!("estimated memory size {} MB", calendar.estimated_size() / 1024 / 1024);
-    println!("{}", calendar);
+fn to_csv(df: &mut DataFrame, name: &str) -> std::io::Result<std::path::PathBuf> {
+    std::fs::create_dir_all(OUT_DIR)?;
+
+    let path = std::path::Path::new(OUT_DIR).join(format!("{}.csv", name));
+    let mut file = std::fs::File::create(&path)?;
+    CsvWriter::new(&mut file)
+        .include_header(true)
+        .finish(df)
+        .map_err(|err| {
+            std::io::Error::new(
+                std::io::ErrorKind::Other,
+                format!("Failed to write CSV: {}", err),
+            )
+        })
+        .map(|_| path)
+}
+
+fn to_parquet(df: &mut DataFrame, name: &str) -> std::io::Result<std::path::PathBuf> {
+    std::fs::create_dir_all(OUT_DIR)?;
+
+    let path = std::path::Path::new(OUT_DIR).join(format!("{}.parquet", name));
+    let mut file = std::fs::File::create(&path)?;
+    ParquetWriter::new(&mut file)
+        .finish(df)
+        .map_err(|err| {
+            std::io::Error::new(
+                std::io::ErrorKind::Other,
+                format!("Failed to write Parquet: {}", err),
+            )
+        })
+        .map(|_| path)
+}
+
+fn main() {
+    let (mut accounts, mut purchases, mut calendar) = prepare_dfs();
+    println!(
+        "estimated memory size: account -> {} MB, purchase -> {} MB, calendar -> {} MB",
+        accounts.estimated_size() / 1024 / 1024,
+        purchases.estimated_size() / 1024 / 1024,
+        calendar.estimated_size() / 1024 / 1024
+    );
+
+    to_csv(&mut accounts, "accounts").unwrap();
+    to_csv(&mut purchases, "purchases").unwrap();
+    to_csv(&mut calendar, "calendar").unwrap();
 }

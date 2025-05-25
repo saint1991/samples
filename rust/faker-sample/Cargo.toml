@@ -1,0 +1,9 @@
+[package]
+name = "faker-sample"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+chrono = { version = "0.4.41" }
+fake = { version = "4.3.0", features = ["derive", "uuid", "chrono", "zerocopy"] }
+polars = { version = "0.48.1", features = ["lazy", "csv", "parquet"] }
