@@ -1,7 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
-from django.utils import timezone
-
 
 class DataSource(models.Model):
     datasource_id = models.AutoField(primary_key=True)
