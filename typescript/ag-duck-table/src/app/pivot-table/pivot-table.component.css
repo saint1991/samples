@@ -1,0 +1,22 @@
+.container {
+  padding: 20px;
+}
+
+h1 {
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.description {
+  margin-bottom: 20px;
+  color: #666;
+  font-size: 14px;
+}
+
+.loading {
+  padding: 20px;
+  text-align: center;
+  font-size: 16px;
+  color: #666;
+}
