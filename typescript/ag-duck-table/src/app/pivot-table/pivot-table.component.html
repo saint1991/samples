@@ -1,0 +1,16 @@
+<div class="container">
+  <h1>Pivot Table with DuckDB-WASM</h1>
+  <p class="description">Sales data aggregated by Region, Product, and Quarter using DuckDB</p>
+
+  @if (loading()) {
+    <div class="loading">Loading DuckDB and processing data...</div>
+  } @else {
+    <ag-grid-angular
+      [class]="themeClass"
+      [columnDefs]="columnDefs()"
+      [rowData]="rowData()"
+      [defaultColDef]="defaultColDef()"
+      style="height: 500px"
+    />
+  }
+</div>
