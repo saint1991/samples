@@ -1,0 +1,14 @@
+name: _root
+description: Workspace root for basis project
+
+environment:
+  sdk: ^3.9.2
+
+# Workspace configuration
+workspace:
+  - packages/basis
+  - packages/main
+
+# Shared dependencies (optional)
+dev_dependencies:
+  lints: ^6.0.0
