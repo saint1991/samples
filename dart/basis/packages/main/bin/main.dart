@@ -24,8 +24,9 @@ void main(List<String> arguments) async {
       .then(
         (content) {
           print(content);
+          return content;
         },
-        onError: (err) {
+        onError: (err, trace) {
           return "DEFAULT CONTENT";
         },
       )
@@ -41,7 +42,44 @@ void main(List<String> arguments) async {
   // Streamは基本的にlistenで購読する。
   // これはObservableのsubscribeに近い。
   // subscription.cancel()がunsubscribeに相当する。
+
   final subscription = futures.fileChunks("./README.md").listen((line) {
     print("LINE: $line");
   });
+
+  // onDoneはcompleteに近い。streamが終了した際に成否に関わらず呼ばれる
+  // onErrorはStreamで例外が発生した際に呼ばれるコールバック。ない場合は例外がスローされる。
+  // 例外がスローされた際に以降のstream購読を行うかは、cancelOnErrorによる
+  final generatorSubscription = futures
+      .generatorLike("./README.md")
+      .listen(
+        (line) {
+          print(line);
+        },
+        onDone: () {
+          print("DONE!!");
+        },
+        onError: (Object exc, StackTrace st) {
+          print(exc);
+        },
+        cancelOnError: false,
+      );
+
+  final st = futures.StreamControllerExample([
+    "pen",
+    "pineapple",
+    "apple",
+    "pen",
+  ]);
+
+  // 基本的に購読は1Stream1つまでだがasBroadcastStreamで複数にできる。
+  // shareReplyに近いが購読開始時点の値以降がとられる点がやや違う。
+  st.stream.asBroadcastStream().listen(
+    (value) {
+      print("$value from controller");
+    },
+    onDone: () {
+      print("controller closed");
+    },
+  );
 }
